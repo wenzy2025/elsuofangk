@@ -4,15 +4,16 @@ context.scale(30, 30);
 
 const arena = createMatrix(10, 20);
 
+// 使用统一的红色方块颜色
 const colors = [
   null,
-  '#0ff',
-  '#f0f',
-  '#ff0',
-  '#0f0',
   '#f00',
-  '#00f',
-  '#ff7f00',
+  '#f00',
+  '#f00',
+  '#f00',
+  '#f00',
+  '#f00',
+  '#f00',
 ];
 
 const player = {
@@ -173,26 +174,24 @@ function hardDrop() {
 }
 
 function arenaSweep() {
-  let rowCount = 1;
-  outer: for (let y = arena.length - 1; y >= 0; --y) {
-    for (let x = 0; x < arena[y].length; ++x) {
-      if (arena[y][x] === 0) {
-        continue outer;
-      }
+  let cleared = 0;
+  for (let y = arena.length - 1; y >= 0; y--) {
+    if (arena[y].every((value) => value !== 0)) {
+      arena.splice(y, 1);
+      arena.unshift(new Array(arena[0].length).fill(0));
+      cleared++;
+      y++; // 重新检查当前行
     }
-    const row = arena.splice(y, 1)[0].fill(0);
-    arena.unshift(row);
-    ++y;
-
-    player.score += rowCount * 100;
-    player.lines += 1;
+  }
+  if (cleared > 0) {
+    player.score += cleared * 100;
+    player.lines += cleared;
     if (player.lines % 10 === 0) {
       player.level += 1;
       dropInterval = Math.max(100, dropInterval - 100);
     }
-    rowCount *= 2;
+    updateScore();
   }
-  updateScore();
 }
 
 function drawMatrix(matrix, offset) {
