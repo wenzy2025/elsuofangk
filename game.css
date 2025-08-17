@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  background: radial-gradient(circle at center, #111, #000);
+  color: #0ff;
+  font-family: 'Courier New', Courier, monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#ui {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+canvas {
+  border: 2px solid #0ff;
+  background: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 20px #0ff;
+}
+
+#info {
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff;
+}
